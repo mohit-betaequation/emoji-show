@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    :root { --primary: #007bff; }
+    body { width: 300px; font-family: sans-serif; margin: 0; padding: 15px; background: #fff; }
+    .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+    .btn-icon { background: none; border: none; font-size: 1.2rem; cursor: pointer; }
+    
+    .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .vibe-btn { 
+      position: relative; padding: 15px; border: 2px solid #eee; border-radius: 10px; 
+      background: white; cursor: pointer; text-align: center;
+    }
+    .vibe-btn.active { border-color: var(--primary); background: #f0f7ff; }
+    .fav-star { position: absolute; top: 5px; right: 5px; color: #ccc; }
+    .fav-star.is-fav { color: #ffc107; }
+
+    .settings-row { margin-bottom: 15px; }
+    .settings-row label { display: block; font-size: 0.8rem; margin-bottom: 5px; }
+    input[type="range"] { width: 100%; }
+    
+    .hidden { display: none; }
+    .nav-footer { margin-top: 15px; border-top: 1px solid #eee; pt: 10px; }
+    .full-width-btn { width: 100%; padding: 10px; background: var(--primary); color: white; border: none; border-radius: 5px; cursor: pointer; }
+  </style>
+</head>
+<body>
+
+  <div id="main-view">
+    <div class="header">
+      <h3 id="view-title">Favorites</h3>
+      <button class="btn-icon" id="go-settings">⚙️</button>
+    </div>
+    
+    <div id="category-container" class="grid"></div>
+
+    <div class="nav-footer">
+      <button id="toggle-all-view" class="full-width-btn">Browse All Categories</button>
+    </div>
+  </div>
+
+  <div id="settings-view" class="hidden">
+    <div class="header">
+      <button class="btn-icon" id="back-home">⬅️</button>
+      <h3>Settings</h3>
+    </div>
+    
+    <div class="settings-row">
+      <label>Density (Frequency)</label>
+      <input type="range" id="density-slider" min="500" max="5000" step="500" value="2000">
+    </div>
+
+    <div class="settings-row">
+      <label>Speed (Float Time)</label>
+      <input type="range" id="speed-slider" min="1" max="10" step="1" value="4">
+    </div>
+
+    <hr>
+    <h4>Manage Categories</h4>
+    <div id="edit-list"></div>
+    <button id="add-category" class="full-width-btn" style="background: #28a745;">+ Add New Category</button>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
