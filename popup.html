@@ -49,7 +49,7 @@
     
     <div class="settings-row">
       <label>Density (Frequency)</label>
-      <input type="range" id="density-slider" min="500" max="5000" step="500" value="2000">
+      <input type="range" id="density-slider" min="200" max="5000" step="200" value="2000">
     </div>
 
     <div class="settings-row">
@@ -61,6 +61,12 @@
     <h4>Manage Categories</h4>
     <div id="edit-list"></div>
     <button id="add-category" class="full-width-btn" style="background: #28a745;">+ Add New Category</button>
+    <div class="settings-row" style="margin-top: 25px; border-top: 2px solid #ffeded; pt: 15px;">
+      <p style="font-size: 0.7rem; color: #888;">Mistakes were made?</p>
+      <button id="restore-default" class="full-width-btn" style="background: #dc3545;">
+        Restore to Defaults
+      </button>
+    </div>
   </div>
 
   <script src="popup.js"></script>
