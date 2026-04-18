@@ -12,5 +12,10 @@
       "js": ["content.js"],
       "css": ["style.css"]
     }
-  ]
+  ],
+  "icons": {
+    "16": "logo_16x16.png",
+    "48": "logo_48x48.png",
+    "128": "logo_128x128.png"
+  }
 }

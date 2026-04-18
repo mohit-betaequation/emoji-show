@@ -23,6 +23,7 @@ let DEFAULT_DATA = {
 };
 
 // --- CORE INITIALIZATION ---
+let config = DEFAULT_DATA;
 
 document.addEventListener('DOMContentLoaded', () => {
     // Load data from Chrome Storage
