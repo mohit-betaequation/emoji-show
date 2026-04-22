@@ -2,7 +2,7 @@
 .vibe-emoji {
   position: fixed;
   bottom: -50px;
-  font-size: 2rem;
+  font-size: 3rem;
   z-index: 999999; /* Ensure it's above everything */
   pointer-events: none; /* Don't block clicks on the website */
   user-select: none;

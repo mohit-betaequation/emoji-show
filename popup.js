@@ -39,6 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
 function initEventListeners() {
     // Navigation
     document.getElementById('go-settings').onclick = openSettings;
+    document.getElementById('play-pause').onclick = playPauseVibes;
     document.getElementById('back-home').onclick = closeSettings;
     document.getElementById('toggle-all-view').onclick = toggleViewMode;
 
@@ -98,6 +99,18 @@ function renderCategories() {
     });
 }
 
+function playPauseVibes(fromButton = false) {
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+        if (tabs && tabs[0]) {
+            chrome.tabs.sendMessage(tabs[0].id, { 
+                action: "PlayPause Toggle", 
+                data: config 
+            }).catch(err => console.log("Content script not ready yet. Navigate to a webpage first."));
+        }
+    });
+    
+}
+
 function openSettings() {
     document.getElementById('main-view').classList.add('hidden');
     document.getElementById('settings-view').classList.remove('hidden');
@@ -135,15 +148,24 @@ function renderEditList() {
                 <span style="font-weight: bold; font-size: 0.85rem;">${cat.emojis[0]} ${cat.name}</span>
                 <span style="font-size: 0.65rem; color: #888;">${cat.emojis.slice(1, 4).join(' ')}...</span>
             </div>
-            <button class="btn-icon" style="color: #ff4d4d;" data-id="${cat.id}">🗑️</button>
+            <div>
+                <button class="btn-icon" id="delete-btn" style="color: #ff4d4d;" data-id="${cat.id}">🗑️</button>
+                <button class="btn-icon" id="edit-btn" style="color: #ff4d4d;" data-id="${cat.id}">✎</button>
+            </div>
         `;
         
-        row.querySelector('button').onclick = () => {
+        row.querySelector('#delete-btn').onclick = () => {
             if (confirm(`Delete category "${cat.name}"?`)) {
                 config.categories = config.categories.filter(c => c.id !== cat.id);
                 // If we deleted the active vibe, reset it to hype
                 if (config.activeVibe === cat.id) config.activeVibe = 'hype';
                 saveData();
+                renderEditList();
+            }
+        };
+        row.querySelector('#edit-btn').onclick = () => {
+            if (confirm(`Edit category "${cat.name}"?`)) {
+                editCategory(cat);
                 renderEditList();
             }
         };
@@ -166,6 +188,22 @@ function addNewCategory() {
     };
 
     config.categories.push(newCat);
+    saveData();
+    renderEditList();
+}
+
+function editCategory(category) {
+    const name = prompt("Category Name (e.g., Space):", category.name);
+    if (!name) return;
+    
+    const emojisStr = prompt("Paste Emojis (e.g., 🚀, 👨‍🚀, 🛸):", category.emojis.join(' '));
+    if (!emojisStr) return;
+    
+    // Update the category
+    category.name = name;
+    category.emojis = emojisStr.split(/[, ]+/).filter(e => e.trim().length > 0);
+    
+
     saveData();
     renderEditList();
 }

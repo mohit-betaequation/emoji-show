@@ -21,6 +21,16 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         vibeData = request.data;
         startVibeLoop(); // Restart to apply new density/speed immediately
         sendResponse({ status: "Content Script Synced" });
+    }   else if (request.action === "PlayPause Toggle") {
+        console.log("Received Play/Pause Toggle from Popup");
+        if (animationInterval){
+            clearInterval(animationInterval);
+            animationInterval = null;
+        } else {
+            console.log("Resuming Vibes...");
+            startVibeLoop();
+        }
+        sendResponse({ status: "Content Script Synced" });
     }
 });
 
